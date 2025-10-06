@@ -1,0 +1,255 @@
+# TechElliptica CricketDB - Git Ignore Configuration
+# Copyright (c) 2024 TechElliptica. All rights reserved.
+
+# ===========================================
+# PROTECTED FILES - DO NOT COMMIT
+# ===========================================
+
+# Obfuscated and Protected Builds
+**/target/
+**/build/
+**/dist/
+**/out/
+**/*-obfuscated.jar
+**/*-protected.jar
+**/*-obfuscated/
+**/*-protected/
+
+# Docker Images and Containers
+**/docker-compose.protected.yml
+**/Dockerfile.protected
+**/docker-compose.override.yml
+**/.docker/
+
+# License and Protection Files
+**/LICENSE.txt
+**/PROTECTION_README.md
+**/PROTECTION_SUMMARY.md
+**/protection/
+**/obfuscated/
+**/protected/
+
+# ===========================================
+# DEVELOPMENT FILES
+# ===========================================
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+**/logs/
+
+# Runtime Data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage Directory
+coverage/
+.nyc_output/
+
+# Dependency Directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===========================================
+# BACKEND SPECIFIC
+# ===========================================
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Spring Boot
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ===========================================
+# FRONTEND SPECIFIC
+# ===========================================
+
+# React Build
+build/
+dist/
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production Build
+/build
+/dist
+
+# ===========================================
+# DATABASE
+# ===========================================
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Database Dumps
+*.sql
+!database/init.sql
+
+# ===========================================
+# SECURITY AND LICENSING
+# ===========================================
+
+# License Files
+**/LICENSE*
+**/license*
+**/License*
+
+# Protection Files
+**/protection/
+**/obfuscated/
+**/protected/
+**/*-protected*
+**/*-obfuscated*
+
+# Secret Files
+**/secrets/
+**/keys/
+**/certificates/
+**/*.key
+**/*.pem
+**/*.p12
+**/*.jks
+
+# ===========================================
+# TESTING
+# ===========================================
+
+# Test Results
+test-results/
+coverage/
+.nyc_output/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ===========================================
+# DOCUMENTATION
+# ===========================================
+
+# Generated Documentation
+docs/generated/
+**/generated/
+
+# ===========================================
+# TEMPORARY FILES
+# ===========================================
+
+# Temporary Files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===========================================
+# KEEP THESE FILES IN GIT
+# ===========================================
+
+# Essential Source Code
+!src/
+!backend/src/
+!frontend/src/
+!database/init.sql
+
+# Configuration Files
+!application.yml
+!package.json
+!pom.xml
+!docker-compose.yml
+!docker-compose.dev.yml
+
+# Documentation
+!README.md
+!API_DOCUMENTATION.md
+
+# Scripts
+!scripts/
+!setup.sh
+
+# Docker Files
+!Dockerfile
+!docker-compose.yml
+!docker-compose.dev.yml
+
+# Git Files
+!.gitignore
+!.gitattributes
+
+# ===========================================
+# PROTECTION NOTICE
+# ===========================================
+
+# This .gitignore file is part of TechElliptica's intellectual property protection system.
+# It ensures that sensitive files, obfuscated code, and protected builds are not committed to version control.
+# 
+# For licensing inquiries: techellipticaeducation@gmail.com
+# Copyright (c) 2024 TechElliptica. All rights reserved.

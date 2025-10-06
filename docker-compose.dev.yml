@@ -1,0 +1,27 @@
+version: '3.8'
+
+# Development override for Docker Compose
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  backend:
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+    volumes:
+      - ./backend:/app
+    command: ["mvn", "spring-boot:run"]
+
+  frontend:
+    environment:
+      REACT_APP_API_URL: http://localhost:6548/api
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: ["npm", "start"]
+
+  phpmyadmin:
+    ports:
+      - "8080:80"

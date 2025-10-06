@@ -1,0 +1,76 @@
+# TechElliptica CricketDB - Git Attributes
+# Copyright (c) 2024 TechElliptica. All rights reserved.
+
+# ===========================================
+# TEXT FILES
+# ===========================================
+
+# Source Code Files
+*.java text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.yml text
+*.yaml text
+*.xml text
+*.md text
+*.txt text
+*.sh text
+
+# Configuration Files
+*.properties text
+*.conf text
+*.config text
+
+# ===========================================
+# BINARY FILES
+# ===========================================
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+
+# Archives
+*.jar binary
+*.war binary
+*.zip binary
+*.tar.gz binary
+*.rar binary
+
+# ===========================================
+# LINE ENDINGS
+# ===========================================
+
+# Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Unix
+*.sh text eol=lf
+*.py text eol=lf
+
+# ===========================================
+# LINGUIST OVERRIDES
+# ===========================================
+
+# Mark generated files as generated
+**/target/** linguist-generated=true
+**/build/** linguist-generated=true
+**/dist/** linguist-generated=true
+**/node_modules/** linguist-vendored=true
+
+# ===========================================
+# PROTECTION NOTICE
+# ===========================================
+
+# This .gitattributes file is part of TechElliptica's intellectual property protection system.
+# It ensures proper handling of source code and binary files in version control.
+# 
+# For licensing inquiries: techellipticaeducation@gmail.com
+# Copyright (c) 2024 TechElliptica. All rights reserved.
