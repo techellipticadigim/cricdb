@@ -1,6 +1,8 @@
-# CricketDB - Cricket Database Management System
+# 🏏 TechElliptica CricketDB - Cricket Database Management System
 
-A comprehensive full-stack web application for managing cricket players, statistics, and analytics with role-based access control.
+**Copyright (c) 2024 TechElliptica. All rights reserved.**
+
+A comprehensive full-stack web application for managing cricket players, statistics, and analytics with admin-only access control. Developed by TechElliptica for educational training purposes.
 
 ## 🏏 Features
 
@@ -9,7 +11,7 @@ A comprehensive full-stack web application for managing cricket players, statist
 - **Statistics Tracking**: Batting and bowling statistics management
 - **Analytics Dashboard**: Real-time analytics and insights
 - **Country-wise Views**: Filter players by country
-- **Role-based Access Control**: ADMIN, DATA_ENTRY, and VIEWER roles
+- **Admin-only Access Control**: ADMIN role with full system access
 
 ### Technical Features
 - **Authentication**: JWT-based authentication with Spring Security
@@ -62,8 +64,9 @@ A comprehensive full-stack web application for managing cricket players, statist
 
 3. **Access the application**
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8080
-   - Swagger UI: http://localhost:8080/swagger-ui.html
+   - Backend API: http://localhost:6548
+   - Swagger UI: http://localhost:6548/swagger-ui.html
+   - phpMyAdmin: http://localhost:8080
    - MySQL: localhost:3306
 
 ### Manual Setup
@@ -102,38 +105,28 @@ A comprehensive full-stack web application for managing cricket players, statist
 ## 👥 User Roles & Permissions
 
 ### ADMIN
-- Full access to all features
-- Can add/edit/delete players
-- Can add statistics
-- Can register new users
-- Can view analytics
-
-### DATA_ENTRY
-- Can add/edit/delete players
-- Can add statistics
-- Can view analytics
-- Cannot register users
-
-### VIEWER
-- Can view players and statistics
-- Can view analytics
-- Read-only access
+- **Full system access** to all features
+- **Player Management**: Add/edit/delete players
+- **Statistics Management**: Add batting and bowling statistics
+- **User Management**: Register new admin users
+- **Analytics Access**: View comprehensive analytics dashboard
+- **System Administration**: Complete system control
 
 ## 🔐 Default Credentials
 
-The application comes with pre-configured demo users:
+The application comes with a pre-configured admin user:
 
 | Role | Email | Password | Access |
 |------|-------|----------|--------|
-| Admin | admin@cricketdb.com | admin123 | Full access |
-| Data Entry | data@cricketdb.com | data123 | Player & stats management |
-| Viewer | viewer@cricketdb.com | viewer123 | View only |
+| Admin | admin@cricketdb.com | admin123 | Full system access |
+
+**Note**: Additional admin users can be registered through the admin panel.
 
 ## 📊 API Endpoints
 
 ### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration (Admin only)
+- `POST /api/auth/login` - Admin login
+- `POST /api/auth/register` - Admin registration (Admin only)
 
 ### Players
 - `GET /api/players` - Get all players
@@ -151,7 +144,7 @@ The application comes with pre-configured demo users:
 - `GET /api/stats/bowling/player/{id}` - Get bowling stats by player
 
 ### Analytics
-- `GET /api/analytics/summary` - Get comprehensive analytics
+- `GET /api/analytics/summary` - Get comprehensive analytics (Public access)
 
 ## 🧪 Testing
 
@@ -232,9 +225,10 @@ cricdb/
 
 ### ✅ Authentication & Security
 - ✅ JWT-based authentication
-- ✅ Role-based authorization
+- ✅ Admin-only authorization
 - ✅ Secure API endpoints
 - ✅ CORS configuration
+- ✅ License validation system
 
 ### ✅ Accessibility & Testing
 - ✅ ARIA labels and roles
@@ -254,7 +248,7 @@ cricdb/
 - `SPRING_SECURITY_JWT_EXPIRATION` - JWT expiration time
 
 #### Frontend
-- `REACT_APP_API_URL` - Backend API URL (default: http://localhost:8080/api)
+- `REACT_APP_API_URL` - Backend API URL (default: http://localhost:6548/api)
 
 ## 🐛 Troubleshooting
 
@@ -266,7 +260,7 @@ cricdb/
    - Verify database `cricketdb` exists
 
 2. **Frontend API Connection Issues**
-   - Ensure backend is running on port 8080
+   - Ensure backend is running on port 6548
    - Check CORS configuration
    - Verify API URL in frontend environment
 
@@ -291,9 +285,23 @@ cricdb/
 4. Add tests for new functionality
 5. Submit a pull request
 
+## 🛡️ Intellectual Property Protection
+
+This application includes comprehensive protection measures:
+
+- **Code Obfuscation**: Both backend and frontend code is obfuscated
+- **License Validation**: Runtime license checking system
+- **Copyright Protection**: All files include copyright notices
+- **Anti-Reverse Engineering**: Multiple layers of protection
+- **Legal Documentation**: Complete license and protection documentation
+
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+**Copyright (c) 2024 TechElliptica. All rights reserved.**
+
+This software is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited. This application is developed by TechElliptica for educational training purposes only.
+
+For licensing inquiries: techellipticaeducation@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -301,3 +309,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Material UI team for the beautiful components
 - React team for the powerful frontend library
 - MySQL team for the robust database system
+
+---
+
+**Developed by TechElliptica for Educational Training Purposes**
+**Contact: techellipticaeducation@gmail.com**

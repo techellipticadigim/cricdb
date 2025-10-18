@@ -7,7 +7,7 @@ USE cricketdb;
 
 -- Insert sample users
 INSERT INTO users (email, password, role) VALUES 
-('admin@cricketdb.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi', 'ADMIN');
+('admin@cricketdb.com', '$2a$10$YA8lCx83T6rqwQLxWVL0Ge7uOoOXPt6kJtT3Xyi5u30foR3BsOhmO', 'ADMIN');
 -- Note: The password hash above is for 'admin123'
 
 -- Insert sample players
