@@ -94,45 +94,7 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <!-- ProGuard Maven Plugin for Code Obfuscation -->
-            <plugin>
-                <groupId>com.guardsquare</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
-                <version>2.6.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>proguard</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <proguardVersion>7.4.2</proguardVersion>
-                    <injar>${project.build.finalName}.jar</injar>
-                    <outjar>${project.build.finalName}-obfuscated.jar</outjar>
-                    <obfuscate>true</obfuscate>
-                    <options>
-                        <option>-dontshrink</option>
-                        <option>-dontoptimize</option>
-                        <option>-keep class com.cricketdb.CricketDbApplication</option>
-                        <option>-keep class com.cricketdb.config.**</option>
-                        <option>-keep class com.cricketdb.controller.**</option>
-                        <option>-keep class com.cricketdb.service.**</option>
-                        <option>-keep class com.cricketdb.repository.**</option>
-                        <option>-keep class com.cricketdb.model.**</option>
-                        <option>-keep class com.cricketdb.dto.**</option>
-                        <option>-keep class com.cricketdb.security.**</option>
-                        <option>-keep class com.cricketdb.exception.**</option>
-                        <option>-keepattributes *Annotation*</option>
-                        <option>-keepattributes Signature</option>
-                        <option>-keepattributes InnerClasses</option>
-                        <option>-keepattributes EnclosingMethod</option>
-                        <option>-keepattributes SourceFile,LineNumberTable</option>
-                    </options>
-                </configuration>
-            </plugin>
+            </plugin>          
         </plugins>
     </build>
 </project>
