@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface BattingStatsRepository extends JpaRepository<BattingStats, Long> {
     List<BattingStats> findByPlayer(Player player);
+    
+    @Query("SELECT b FROM BattingStats b JOIN FETCH b.player WHERE b.player.playerId = :playerId")
+    List<BattingStats> findByPlayerIdWithPlayer(@Param("playerId") Long playerId);
     
     @Query("SELECT p.playerName, SUM(b.runs) FROM Player p JOIN p.battingStats b GROUP BY p ORDER BY SUM(b.runs) DESC")
     List<Object[]> findHighestRunsData();

@@ -13,8 +13,6 @@ import {
   Divider,
   useTheme,
   useMediaQuery,
-  Link,
-  Container,
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
@@ -198,33 +196,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Toolbar />
         <Box sx={{ flexGrow: 1 }}>
           {children}
-        </Box>
-        {/* Footer */}
-        <Box
-          component="footer"
-          sx={{
-            py: 2,
-            px: 2,
-            mt: 'auto',
-            backgroundColor: 'grey.100',
-            borderTop: 1,
-            borderColor: 'grey.300',
-          }}
-        >
-          <Container maxWidth="lg">
-            <Typography variant="body2" color="text.secondary" align="center">
-              Powered by{' '}
-              <Link
-                href="https://techelliptica.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ textDecoration: 'none', fontWeight: 'bold' }}
-                data-testid="techelliptica-link"
-              >
-                TechElliptica
-              </Link>
-            </Typography>
-          </Container>
         </Box>
       </Box>
     </Box>

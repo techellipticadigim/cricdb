@@ -96,6 +96,24 @@ export const statsAPI = {
   
   getBowlingStatsByPlayer: (playerId: number): Promise<BowlingStats[]> =>
     api.get(`/stats/bowling/player/${playerId}`).then(res => res.data),
+  
+  getBattingStatById: (id: number): Promise<BattingStats> =>
+    api.get(`/stats/batting/${id}`).then(res => res.data),
+  
+  getBowlingStatById: (id: number): Promise<BowlingStats> =>
+    api.get(`/stats/bowling/${id}`).then(res => res.data),
+  
+  updateBattingStats: (id: number, stats: BattingStatsRequest): Promise<BattingStats> =>
+    api.put(`/stats/batting/${id}`, stats).then(res => res.data),
+  
+  updateBowlingStats: (id: number, stats: BowlingStatsRequest): Promise<BowlingStats> =>
+    api.put(`/stats/bowling/${id}`, stats).then(res => res.data),
+  
+  deleteBattingStats: (id: number): Promise<void> =>
+    api.delete(`/stats/batting/${id}`).then(res => res.data),
+  
+  deleteBowlingStats: (id: number): Promise<void> =>
+    api.delete(`/stats/bowling/${id}`).then(res => res.data),
 };
 
 // Analytics API

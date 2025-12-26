@@ -4,14 +4,17 @@ import com.cricketdb.model.BowlingStats;
 import com.cricketdb.model.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface BowlingStatsRepository extends JpaRepository<BowlingStats, Long> {
     List<BowlingStats> findByPlayer(Player player);
+    
+    @Query("SELECT b FROM BowlingStats b JOIN FETCH b.player WHERE b.player.playerId = :playerId")
+    List<BowlingStats> findByPlayerIdWithPlayer(@Param("playerId") Long playerId);
     
     @Query("SELECT p.playerName, SUM(b.wicketsTaken) FROM Player p JOIN p.bowlingStats b GROUP BY p ORDER BY SUM(b.wicketsTaken) DESC")
     List<Object[]> findHighestWicketsData();

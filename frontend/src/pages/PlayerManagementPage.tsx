@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import PlayerList from '../components/PlayerList';
 import PlayerStatsForm from '../components/PlayerStatsForm';
+import ShadowDOMFooter from '../components/ShadowDOMFooter';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -73,6 +74,11 @@ const PlayerManagementPage: React.FC = () => {
           </TabPanel>
         )}
       </Paper>
+
+      {/* Shadow DOM Footer */}
+      <Box sx={{ mt: 4 }}>
+        <ShadowDOMFooter />
+      </Box>
     </Box>
   );
 };

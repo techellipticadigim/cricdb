@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -18,12 +19,15 @@ import {
   Chip,
   Alert,
   CircularProgress,
+  Link as MuiLink,
 } from '@mui/material';
 import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   Visibility as ViewIcon,
+  BarChart as StatsIcon,
+  OpenInNew as OpenInNewIcon,
 } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Player } from '../types';
@@ -32,6 +36,7 @@ import { useAuth } from '../context/AuthContext';
 import PlayerForm from './PlayerForm';
 
 const PlayerList: React.FC = () => {
+  const navigate = useNavigate();
   const [players, setPlayers] = useState<Player[]>([]);
   const [countries, setCountries] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>('All');
@@ -108,9 +113,40 @@ const PlayerList: React.FC = () => {
     }
   };
 
+  const handleViewStatistics = (playerId: number) => {
+    const url = `${window.location.origin}/players/${playerId}/statistics`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   const columns: GridColDef[] = [
     { field: 'playerId', headerName: 'ID', width: 70 },
-    { field: 'playerName', headerName: 'Name', width: 200 },
+    { 
+      field: 'playerName', 
+      headerName: 'Name', 
+      width: 200,
+      renderCell: (params) => (
+        <MuiLink
+          component="button"
+          variant="body2"
+          onClick={() => handleViewStatistics(params.row.playerId)}
+          sx={{
+            cursor: 'pointer',
+            textDecoration: 'none',
+            color: 'primary.main',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+          }}
+          data-testid={`player-name-link-${params.row.playerId}`}
+        >
+          {params.value}
+          <OpenInNewIcon sx={{ fontSize: 14 }} />
+        </MuiLink>
+      ),
+    },
     { field: 'country', headerName: 'Country', width: 120 },
     { field: 'startYear', headerName: 'Start Year', width: 100 },
     { 
@@ -141,10 +177,20 @@ const PlayerList: React.FC = () => {
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 150,
+      width: 200,
       sortable: false,
       renderCell: (params) => (
         <Box>
+          <IconButton
+            size="small"
+            onClick={() => handleViewStatistics(params.row.playerId)}
+            data-testid={`view-stats-${params.row.playerId}`}
+            aria-label={`View statistics for ${params.row.playerName}`}
+            color="primary"
+            title="View Statistics (Opens in new tab)"
+          >
+            <StatsIcon />
+          </IconButton>
           <IconButton
             size="small"
             onClick={() => handleEditPlayer(params.row)}

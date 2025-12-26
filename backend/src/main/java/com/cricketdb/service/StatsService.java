@@ -10,6 +10,7 @@ import com.cricketdb.repository.BowlingStatsRepository;
 import com.cricketdb.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,15 +58,87 @@ public class StatsService {
         return bowlingStatsRepository.save(bowlingStats);
     }
     
+    @Transactional(readOnly = true)
     public List<BattingStats> getBattingStatsByPlayer(Long playerId) {
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found with id: " + playerId));
-        return battingStatsRepository.findByPlayer(player);
+        if (!playerRepository.existsById(playerId)) {
+            throw new RuntimeException("Player not found with id: " + playerId);
+        }
+        // Use JOIN FETCH to eagerly load player and avoid lazy loading issues
+        return battingStatsRepository.findByPlayerIdWithPlayer(playerId);
     }
     
+    @Transactional(readOnly = true)
     public List<BowlingStats> getBowlingStatsByPlayer(Long playerId) {
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found with id: " + playerId));
-        return bowlingStatsRepository.findByPlayer(player);
+        if (!playerRepository.existsById(playerId)) {
+            throw new RuntimeException("Player not found with id: " + playerId);
+        }
+        // Use JOIN FETCH to eagerly load player and avoid lazy loading issues
+        return bowlingStatsRepository.findByPlayerIdWithPlayer(playerId);
+    }
+    
+    @Transactional(readOnly = true)
+    public BattingStats getBattingStatById(Long id) {
+        return battingStatsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Batting stat not found with id: " + id));
+    }
+    
+    @Transactional(readOnly = true)
+    public BowlingStats getBowlingStatById(Long id) {
+        return bowlingStatsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bowling stat not found with id: " + id));
+    }
+    
+    @Transactional
+    public BattingStats updateBattingStats(Long id, BattingStatsRequest request) {
+        BattingStats existingStats = battingStatsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Batting stat not found with id: " + id));
+        
+        Player player = playerRepository.findById(request.getPlayerId())
+                .orElseThrow(() -> new RuntimeException("Player not found with id: " + request.getPlayerId()));
+        
+        existingStats.setPlayer(player);
+        existingStats.setRuns(request.getRuns());
+        existingStats.setBallsPlayed(request.getBallsPlayed());
+        existingStats.setSixes(request.getSixes());
+        existingStats.setFours(request.getFours());
+        existingStats.setAgainst(request.getAgainst());
+        existingStats.setMatchDate(request.getMatchDate());
+        
+        return battingStatsRepository.save(existingStats);
+    }
+    
+    @Transactional
+    public BowlingStats updateBowlingStats(Long id, BowlingStatsRequest request) {
+        BowlingStats existingStats = bowlingStatsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bowling stat not found with id: " + id));
+        
+        Player player = playerRepository.findById(request.getPlayerId())
+                .orElseThrow(() -> new RuntimeException("Player not found with id: " + request.getPlayerId()));
+        
+        existingStats.setPlayer(player);
+        existingStats.setOvers(request.getOvers());
+        existingStats.setMaidens(request.getMaidens());
+        existingStats.setRunsGiven(request.getRunsGiven());
+        existingStats.setWicketsTaken(request.getWicketsTaken());
+        existingStats.setAgainst(request.getAgainst());
+        existingStats.setMatchDate(request.getMatchDate());
+        
+        return bowlingStatsRepository.save(existingStats);
+    }
+    
+    @Transactional
+    public void deleteBattingStats(Long id) {
+        if (!battingStatsRepository.existsById(id)) {
+            throw new RuntimeException("Batting stat not found with id: " + id);
+        }
+        battingStatsRepository.deleteById(id);
+    }
+    
+    @Transactional
+    public void deleteBowlingStats(Long id) {
+        if (!bowlingStatsRepository.existsById(id)) {
+            throw new RuntimeException("Bowling stat not found with id: " + id);
+        }
+        bowlingStatsRepository.deleteById(id);
     }
 }

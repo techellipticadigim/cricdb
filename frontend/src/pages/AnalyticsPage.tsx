@@ -8,17 +8,25 @@ import {
   CircularProgress,
   Alert,
   Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  IconButton,
+  Drawer,
 } from '@mui/material';
 import {
   TrendingUp as TrendingUpIcon,
   EmojiEvents as TrophyIcon,
   SportsCricket as CricketIcon,
   Timeline as TimelineIcon,
+  Edit as EditIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { AnalyticsResponse } from '../types';
 import { analyticsAPI } from '../services/api';
 import ShadowDOMCard from '../components/ShadowDOMCard';
+import ShadowDOMFooter from '../components/ShadowDOMFooter';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -26,6 +34,8 @@ const AnalyticsPage: React.FC = () => {
   const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     loadAnalytics();
@@ -122,10 +132,43 @@ const AnalyticsPage: React.FC = () => {
   );
 
   return (
-    <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Cricket Analytics Dashboard
-      </Typography>
+    <Box sx={{ width: '100%' }}>
+      <Box 
+        display="flex" 
+        justifyContent="space-between" 
+        alignItems="center" 
+        mb={3} 
+        flexWrap="wrap" 
+        gap={2}
+        sx={{ width: '100%' }}
+      >
+        <Typography variant="h4" component="h1" sx={{ flex: 1, minWidth: '200px' }}>
+          Cricket Analytics Dashboard
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          startIcon={<EditIcon />}
+          onClick={() => {
+            setDrawerOpen(true);
+          }}
+          sx={{ 
+            minWidth: '160px',
+            height: '48px',
+            flexShrink: 0,
+            fontSize: '16px',
+            fontWeight: 'bold',
+            boxShadow: 2,
+            '&:hover': {
+              boxShadow: 4,
+            },
+          }}
+          data-testid="edit-innings-button"
+        >
+          Edit Innings
+        </Button>
+      </Box>
 
       {/* Key Statistics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -234,6 +277,74 @@ const AnalyticsPage: React.FC = () => {
           />
         </Grid>
       </Grid>
+
+      {/* Drawer with iframe for Edit Innings */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{
+          sx: { width: { xs: '100%', sm: '80%', md: '60%' }, maxWidth: '900px' }
+        }}
+      >
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h6">Edit Player Innings</Typography>
+            <IconButton onClick={() => setDrawerOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Box sx={{ flex: 1, overflow: 'hidden' }}>
+            <iframe
+              src="/edit-innings"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+              }}
+              title="Edit Innings"
+            />
+          </Box>
+        </Box>
+      </Drawer>
+
+      {/* Alternative Dialog with iframe (commented out, using drawer instead) */}
+      {false && (
+        <Dialog
+          open={editDialogOpen}
+          onClose={() => setEditDialogOpen(false)}
+          maxWidth="lg"
+          fullWidth
+          PaperProps={{
+            sx: { height: '90vh' }
+          }}
+        >
+          <DialogTitle>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Typography variant="h6">Edit Player Innings</Typography>
+              <IconButton onClick={() => setEditDialogOpen(false)} size="small">
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </DialogTitle>
+          <Box sx={{ height: 'calc(90vh - 64px)', overflow: 'hidden' }}>
+            <iframe
+              src="/edit-innings"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+              }}
+              title="Edit Innings"
+            />
+          </Box>
+        </Dialog>
+      )}
+
+      {/* Shadow DOM Footer */}
+      <Box sx={{ mt: 4 }}>
+        <ShadowDOMFooter />
+      </Box>
     </Box>
   );
 };

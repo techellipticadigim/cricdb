@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import ShadowDOMFooter from '../components/ShadowDOMFooter';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -112,6 +113,11 @@ const LoginPage: React.FC = () => {
             </Typography>
           </Box>
         </Paper>
+      </Box>
+
+      {/* Shadow DOM Footer */}
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <ShadowDOMFooter />
       </Box>
     </Container>
   );

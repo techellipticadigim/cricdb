@@ -53,4 +53,50 @@ public class StatsController {
         List<BowlingStats> bowlingStats = statsService.getBowlingStatsByPlayer(playerId);
         return ResponseEntity.ok(bowlingStats);
     }
+    
+    @GetMapping("/batting/{id}")
+    @Operation(summary = "Get batting stat by ID", description = "Retrieve a specific batting statistic by ID")
+    public ResponseEntity<BattingStats> getBattingStatById(@PathVariable Long id) {
+        BattingStats battingStats = statsService.getBattingStatById(id);
+        return ResponseEntity.ok(battingStats);
+    }
+    
+    @GetMapping("/bowling/{id}")
+    @Operation(summary = "Get bowling stat by ID", description = "Retrieve a specific bowling statistic by ID")
+    public ResponseEntity<BowlingStats> getBowlingStatById(@PathVariable Long id) {
+        BowlingStats bowlingStats = statsService.getBowlingStatById(id);
+        return ResponseEntity.ok(bowlingStats);
+    }
+    
+    @PutMapping("/batting/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DATA_ENTRY')")
+    @Operation(summary = "Update batting stats", description = "Update batting statistics for a specific innings")
+    public ResponseEntity<BattingStats> updateBattingStats(@PathVariable Long id, @Valid @RequestBody BattingStatsRequest request) {
+        BattingStats battingStats = statsService.updateBattingStats(id, request);
+        return ResponseEntity.ok(battingStats);
+    }
+    
+    @PutMapping("/bowling/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DATA_ENTRY')")
+    @Operation(summary = "Update bowling stats", description = "Update bowling statistics for a specific innings")
+    public ResponseEntity<BowlingStats> updateBowlingStats(@PathVariable Long id, @Valid @RequestBody BowlingStatsRequest request) {
+        BowlingStats bowlingStats = statsService.updateBowlingStats(id, request);
+        return ResponseEntity.ok(bowlingStats);
+    }
+    
+    @DeleteMapping("/batting/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DATA_ENTRY')")
+    @Operation(summary = "Delete batting stats", description = "Delete a specific batting statistic")
+    public ResponseEntity<Void> deleteBattingStats(@PathVariable Long id) {
+        statsService.deleteBattingStats(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    @DeleteMapping("/bowling/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DATA_ENTRY')")
+    @Operation(summary = "Delete bowling stats", description = "Delete a specific bowling statistic")
+    public ResponseEntity<Void> deleteBowlingStats(@PathVariable Long id) {
+        statsService.deleteBowlingStats(id);
+        return ResponseEntity.noContent().build();
+    }
 }

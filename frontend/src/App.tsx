@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -8,6 +8,9 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import PlayerManagementPage from './pages/PlayerManagementPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import PlayerStatisticsPage from './pages/PlayerStatisticsPage';
+import EditInningsPage from './pages/EditInningsPage';
+import EditInningPage from './pages/EditInningPage';
 import Layout from './components/Layout';
 
 const theme = createTheme({
@@ -23,7 +26,38 @@ const theme = createTheme({
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+  const location = useLocation();
+  
+  // Also check localStorage directly as fallback for new tabs
+  const checkAuth = (): boolean => {
+    if (isAuthenticated) return true;
+    try {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      return !!(token && user);
+    } catch {
+      return false;
+    }
+  };
+
+  return checkAuth() ? (
+    <>{children}</>
+  ) : (
+    <Navigate to="/login" state={{ from: location }} replace />
+  );
+};
+
+const LoginRoute: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+  
+  if (isAuthenticated) {
+    // Redirect to the page they were trying to access, or analytics as default
+    const from = (location.state as any)?.from?.pathname || '/analytics';
+    return <Navigate to={from} replace />;
+  }
+  
+  return <LoginPage />;
 };
 
 const AppContent: React.FC = () => {
@@ -36,7 +70,7 @@ const AppContent: React.FC = () => {
         <Routes>
           <Route 
             path="/login" 
-            element={!isAuthenticated ? <LoginPage /> : <Navigate to="/analytics" replace />} 
+            element={<LoginRoute />} 
           />
           <Route
             path="/"
@@ -57,6 +91,32 @@ const AppContent: React.FC = () => {
                 <Layout>
                   <PlayerManagementPage />
                 </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/players/:playerId/statistics"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <PlayerStatisticsPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-innings"
+            element={
+              <ProtectedRoute>
+                <EditInningsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-inning"
+            element={
+              <ProtectedRoute>
+                <EditInningPage />
               </ProtectedRoute>
             }
           />

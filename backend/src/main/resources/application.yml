@@ -13,6 +13,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+    open-in-view: false
+  
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    default-property-inclusion: non_null
   
   security:
     jwt:
@@ -46,4 +52,4 @@ techelliptica:
   license:
     key: TE2024CRICKETDB
     secret: TechEllipticaSecret2024
-    enabled: true
+    enabled: false  # Set to true for production
